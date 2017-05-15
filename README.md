@@ -1,0 +1,2 @@
+# Projet-Ecarlate
+Trading project
