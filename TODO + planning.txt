@@ -1,0 +1,25 @@
+15/05 - 17/05 : Génération des données (bougies + indicateurs de base) [Bitfinex ~3 mois]
+17/05 - 19/05 : Script de backtest [Bitfinex ~1 mois] et génération des données associées
+20/05 - 28/05 : Premiers tests et résultats
+29/05 - 11/06 : Acquisition et transformation des données réelles (échanges multiples)
+12/06 - 18/06 : Ajout d'indicateurs classiques
+19/06 - 02/07 : Tests poussés et résultats
+03/07 - 09/07 : Ajout d'indicateurs évolués (recherches internet, cours d'autres monnaies)
+10/07 - 23/07 : Tests finaux et résultats
+Long terme : Réécriture de la partie réseau de neurones en C++
+Long terme : Optimisations et amélioration du réseau de neurones
+             en prenant pour appui les recherches récentes (adaptées au trading)
+             
+Critère de performance du backtest
+Script: temps d'entraînement et performance -> n nombres de bougies en entrée
+Voir si on utilise le maximum de vraisemblance ou pas (enfin si on l'adapte)
+
+Armagarch sur chaque valeur des bougies
+Critère achat/vente : distribution des accroissements sur toutes les données -> prendre le quantile et fitter sur -1/1
+K-fold validation (plusieurs échantillons de test) puis mesurer 
+Orderbook et prix moyen etc surtout si volatilité
+Performance: offset temps prix au moment de l'ordre
+Éventuellement prendre prix selon le dernier ordre placé dans le même sens que celui qu'on veut placer
+On considère les sauts de prix (prix montant en vente/inverse) comme allant dans le sens de la variation de prix
+Si prix ne bouge pas -> ajouter au même volume que le dernier ordre validé, aussi faire un indicateur où on l'ajoute pas
+Indicateurs: volatilité (EWMA)
