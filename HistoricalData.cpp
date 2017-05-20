@@ -60,6 +60,7 @@ void HistoricalData::generateCandles(const std::vector <Tick> &ticks) {
         ++lastCandle.tradeCount;
         totalPrice += tick.price;
         totalWeightedPrice += tick.price * tick.volume;
+        // TODO Volatility, EWMAVolatility
     }
 }
 
