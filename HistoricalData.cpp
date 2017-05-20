@@ -33,8 +33,10 @@ void HistoricalData::generateCandles(const std::vector <Tick> &ticks) {
         while (tick.timestamp - curTimestamp >= candleWidth) {
             curTimestamp += candleWidth;
             if (!candles.empty()) {
-                candles.back().avgPrice = totalPrice / candles.back().tradeCount;
-                candles.back().avgWeightedPrice = totalWeightedPrice / candles.back().volume;
+#pragma GCC diagnostic ignored "-Wfloat-equal"
+                candles.back().avgPrice = (candles.back().tradeCount == 0 ? candles.back().close : totalPrice / candles.back().tradeCount);
+                candles.back().avgWeightedPrice = (candles.back().volumeNE0 == 0 ? candles.back().close : totalWeightedPrice / candles.back().volume);
+#pragma GCC diagnostic pop
             }
             candles.push_back(
                     {curTimestamp, tick.price, tick.price, tick.price, tick.price, 0, 0, 0, 0, 0, 0, 0, 0, tick.price,
@@ -50,8 +52,10 @@ void HistoricalData::generateCandles(const std::vector <Tick> &ticks) {
         if (tick.price >= lastPrice) lastCandle.volumeGE0 += tick.price;
         if (tick.price < lastPrice) lastCandle.volumeLT0 += tick.price;
         if (tick.price <= lastPrice) lastCandle.volumeLE0 += tick.price;
+#pragma GCC diagnostic ignored "-Wfloat-equal"
         if (tick.price == lastPrice) lastCandle.volumeEQ0 += tick.price;
         if (tick.price != lastPrice) lastCandle.volumeNE0 += tick.price;
+#pragma GCC diagnostic pop
         lastPrice = tick.price;
         ++lastCandle.tradeCount;
         totalPrice += tick.price;
