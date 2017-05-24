@@ -1,5 +1,6 @@
 #include <fstream>
 #include <sstream>
+#include <iostream>
 #include "HistoricalData.h"
 
 HistoricalData::HistoricalData(const Options &_options) : values(), options(_options), candles() {
@@ -11,13 +12,23 @@ HistoricalData::HistoricalData(const Options &_options) : values(), options(_opt
     std::string line;
     std::stringstream iss;
     Tick parsedTick;
+    char comma;
+    long lineCount = 0, totalLines = 0;
     while (std::getline(file, line)) {
         if (!line.empty()) {
             iss = std::stringstream(line);
             iss >> parsedTick.timestamp;
+            iss >> comma;
             iss >> parsedTick.price;
+            iss >> comma;
             iss >> parsedTick.volume;
             ticks.push_back(parsedTick);
+        }
+        lineCount++;
+        if (lineCount == 100000) {
+            lineCount = 0;
+            totalLines += 100000;
+            std::cout << totalLines << " lines processed." << std::endl;
         }
     }
     if (!ticks.empty()) {

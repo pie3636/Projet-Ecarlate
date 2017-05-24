@@ -7,8 +7,8 @@
 
 struct Tick {
     long timestamp;
-    float price;
-    float volume;
+    double price;
+    double volume;
 };
 
 class HistoricalData {

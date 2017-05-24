@@ -1,3 +1,4 @@
+#include <iostream>
 #include "HistoricalData.h"
 
 int main(int argc, char *argv[]) {
@@ -10,6 +11,7 @@ int main(int argc, char *argv[]) {
     if (options.exited()) {
         return EXIT_SUCCESS;
     }
+    std::cout << "Reading file [" << options.getInputFile() << "]..." << std::endl;
     HistoricalData historicalData(options);
     // Shape of candles, shadow, ratio body, etc, multi candle patterns
     // Trend?, wedges, patterns, waves, divergences etc
@@ -27,7 +29,9 @@ int main(int argc, char *argv[]) {
     // Ichimoku
     // Pivots
     // https://www.tradingtechnologies.com/help/x-study/technical-indicator-definitions/list-of-technical-indicators/
+    std::cout << "Applying indicators..." << std::endl;
     historicalData.applyIndicators();
+    std::cout << "Writing to file [" << options.getOutputFile() << "]..." << std::endl;
     historicalData.writeToFile();
     return EXIT_SUCCESS;
 }
